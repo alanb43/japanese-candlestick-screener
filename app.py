@@ -34,7 +34,7 @@ def main():
       else:
         stocks[symbol][pattern] = None
 
-  return render_template('index.html', patterns=patterns, stocks=stocks)
+  return render_template('index.html', patterns=patterns, stocks=stocks, current_pattern=pattern)
 
 @app.route("/snap")
 def capture_data():

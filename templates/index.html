@@ -1,17 +1,59 @@
 <html>
 <head>
-<body>
-  <h1>Candlestick Screener</h1>
+  <style>
+    header { position: fixed; top: 0; background-color: #b2bfd4; margin: 0px; width: 100%; display: flex; left: 0px; }
+    h1 { margin-left: 100px; color: white; }
+    select { background-color: white; border: 6px solid white; color: #a5b0c2}
+    body { margin: 130px 100px 100px 100px; background: white; font-family: Arial, Helvetica, sans-serif; }
+    table {width: 80%; margin-left: 120px; }
+    td { padding: 10px; }
+    tr { text-align: center; }
+    th {padding-bottom: 20px;}
+    .bullish { background: green; color: white; }
+    .bearish { background: red; color: white; }
+    #scan { margin: 25px 200px 0px 300px; }
+    h5 { color: white; margin: 32px 50px 0px 100px; }
+    a { color: blue; }
+  </style>
+  <script type = "text/javascript">
+       function Redirect(pattern) {
+        var path = "?pattern="  
+        window.location = path + pattern;
+       }
+ </script>
+</head>
+<header>
+  <h1>Candlestick Screener Tool</h1>
   <form>
-    <select name="pattern">
+    <select id="scan" name="pattern" onchange="Redirect(this.options[this.selectedIndex].value);">
+      <option value="">Select a candlestick pattern</option>
       {% for pattern in patterns %}
-      <option value="{{pattern}}">{{ patterns[pattern] }}</option>
+        <option value="{{pattern}}" {% if pattern == current_pattern %} selected="selected" {% endif %}>{{ patterns[pattern] }}</option>
       {% endfor %}
     </select>
-    <input type="submit" value="scan"/>
   </form>
-
-
-</body>  
-</head>
+  <h5>Thanks for visiting, check out  <a href="https://www.github.com/alanb43">my github</a>  or my  <a href="https://www.bergsneider.dev">website</a></h5>
+</header>
+<body>
+  <table>
+    <tr>
+      <th>symbol</th>
+      <th>company name</th>
+      <th>signal</th>
+      <th>graph</th>
+    </tr>
+    {% for stock in stocks %}
+      {% if stocks[stock][current_pattern] %}
+      <tr>        
+        <td>{{ stock }}</td>
+        <td>{{ stocks[stock]['company'] }}</td>
+        <td class="{{ stocks[stock][current_pattern] }}">{{ stocks[stock][current_pattern] }} </td>
+        <td colspan="3">
+          <img src="https://finviz.com/chart.ashx?t={{ stock }}&ty=c&ta=1&p=d&s=l"/>
+        </td>
+      </tr>
+      {% endif %}
+    {% endfor %}
+  </table>
+</body>
 </html>
