@@ -3,7 +3,9 @@
   <style>
     header { position: fixed; top: 0; background-color: #b2bfd4; margin: 0px; width: 100%; display: flex; left: 0px; }
     h1 { margin-left: 100px; color: white; }
-    select { background-color: white; border: 6px solid white; color: #a5b0c2}
+    #scan { margin: 25px 200px 0px 200px; }
+    select { background-color: white; border: 6px solid white; color: #a5b0c2 }
+    h5 { color: white; margin: 32px 50px 0px 100px; }
     body { margin: 130px 100px 100px 100px; background: white; font-family: Arial, Helvetica, sans-serif; }
     table {width: 80%; margin-left: 120px; }
     td { padding: 10px; }
@@ -11,8 +13,6 @@
     th {padding-bottom: 20px;}
     .bullish { background: green; color: white; }
     .bearish { background: red; color: white; }
-    #scan { margin: 25px 200px 0px 300px; }
-    h5 { color: white; margin: 32px 50px 0px 100px; }
     a { color: blue; }
   </style>
   <script type = "text/javascript">
@@ -23,9 +23,9 @@
  </script>
 </head>
 <header>
-  <h1>Candlestick Screener Tool</h1>
-  <form>
-    <select id="scan" name="pattern" onchange="Redirect(this.options[this.selectedIndex].value);">
+  <h1 onclick="location='/snap'">Candlestick Screener Tool</h1>
+  <form id="scan">
+    <select name="pattern" onchange="Redirect(this.options[this.selectedIndex].value);">
       <option value="">Select a candlestick pattern</option>
       {% for pattern in patterns %}
         <option value="{{pattern}}" {% if pattern == current_pattern %} selected="selected" {% endif %}>{{ patterns[pattern] }}</option>
