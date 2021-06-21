@@ -4,25 +4,37 @@ import yfinance as yf
 from datetime import date
 import talib
 import pandas as pd
-import os
+import os, csv
 
 app = Flask(__name__)
+
 
 DAILY_DATA_PATH = 'datasets/daily/'
 
 @app.route("/")
 def main():
   pattern = request.args.get('pattern', None)
+  stocks = {}
+  with open('datasets/companies.csv') as f:
+    for row in csv.reader(f):
+      stocks[row[0]] = {'company': row[1]}
+
   if pattern:
-    print(pattern)
     data_files = os.listdir(DAILY_DATA_PATH)
     for dataset in data_files:
+      symbol = dataset.split('.')[0]
       df = pd.read_csv(f'{DAILY_DATA_PATH}{dataset}')
       pattern_func = getattr(talib, pattern)
       result = pattern_func(df['Open'], df['High'], df['Low'], df['Close'])
-      print(result)
+      last = result.tail(1).values[0]
+      if last > 0:
+        stocks[symbol][pattern] = 'bullish'
+      elif last < 0:
+        stocks[symbol][pattern] = 'bearish'
+      else:
+        stocks[symbol][pattern] = None
 
-  return render_template('index.html', patterns=patterns)
+  return render_template('index.html', patterns=patterns, stocks=stocks)
 
 @app.route("/snap")
 def capture_data():
