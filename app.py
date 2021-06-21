@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 from patterns import patterns
 import yfinance as yf
+from datetime import date
 
 app = Flask(__name__)
 
@@ -10,4 +11,10 @@ def hello_world():
 
 @app.route("/snap")
 def snapshot():
-  return "SUCCESS"
+  with open('datasets/companies.csv') as f:
+    companies = f.read().splitlines()
+    for company in companies:
+      today = date.today()
+      symbol = company.split(',')[0]
+      data = yf.download(symbol, start="2021-01-01", end=today)
+  return "symbol"
