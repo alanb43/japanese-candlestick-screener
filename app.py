@@ -1,10 +1,12 @@
-from flask import Flask
+from flask import Flask, render_template
+from patterns import patterns
+import yfinance as yf
 
 app = Flask(__name__)
 
 @app.route("/")
 def hello_world():
-  return "<p>Hello, World!</p>"
+  return render_template('index.html', patterns=patterns)
 
 @app.route("/snap")
 def snapshot():
