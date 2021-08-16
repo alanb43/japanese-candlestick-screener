@@ -1,6 +1,6 @@
 # Candlestick Pattern Scanner
 
-This python web-app accesses price data from the start of the year up to present day for companies in the S&P 500 to find and display candlestick patterns in a web browser. Choose from 60+ patterns, and all companies who've exhibited this pattern in their price data in the last available day in the data will populate the screen.
+This python web-app accesses price data from the start of the year up to present day for companies in the S&P 500 to find and display Japanese candlestick patterns from [this book](https://www.amazon.com/Japanese-Candlestick-Charting-Techniques-Second/dp/0735201811) in a web browser. Choose from 60+ patterns, and all companies who've exhibited this pattern in their price data in the last available day in the data will populate the screen.
 
 ![](https://i.imgur.com/ngoXfeM.gif)
 
